@@ -1,0 +1,757 @@
+[
+    {
+        "label": "math",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "math",
+        "description": "math",
+        "detail": "math",
+        "documentation": {}
+    },
+    {
+        "label": "torch",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torch",
+        "description": "torch",
+        "detail": "torch",
+        "documentation": {}
+    },
+    {
+        "label": "make_anchors",
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "isExtraImport": true,
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "random",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "random",
+        "description": "random",
+        "detail": "random",
+        "documentation": {}
+    },
+    {
+        "label": "cv2",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "cv2",
+        "description": "cv2",
+        "detail": "cv2",
+        "documentation": {}
+    },
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "Image",
+        "importPath": "PIL",
+        "description": "PIL",
+        "isExtraImport": true,
+        "detail": "PIL",
+        "documentation": {}
+    },
+    {
+        "label": "data",
+        "importPath": "torch.utils",
+        "description": "torch.utils",
+        "isExtraImport": true,
+        "detail": "torch.utils",
+        "documentation": {}
+    },
+    {
+        "label": "data",
+        "importPath": "torch.utils",
+        "description": "torch.utils",
+        "isExtraImport": true,
+        "detail": "torch.utils",
+        "documentation": {}
+    },
+    {
+        "label": "copy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "copy",
+        "description": "copy",
+        "detail": "copy",
+        "documentation": {}
+    },
+    {
+        "label": "time",
+        "importPath": "time",
+        "description": "time",
+        "isExtraImport": true,
+        "detail": "time",
+        "documentation": {}
+    },
+    {
+        "label": "torchvision",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "torchvision",
+        "description": "torchvision",
+        "detail": "torchvision",
+        "documentation": {}
+    },
+    {
+        "label": "cross_entropy",
+        "importPath": "torch.nn.functional",
+        "description": "torch.nn.functional",
+        "isExtraImport": true,
+        "detail": "torch.nn.functional",
+        "documentation": {}
+    },
+    {
+        "label": "csv",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "csv",
+        "description": "csv",
+        "detail": "csv",
+        "documentation": {}
+    },
+    {
+        "label": "warnings",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "warnings",
+        "description": "warnings",
+        "detail": "warnings",
+        "documentation": {}
+    },
+    {
+        "label": "ArgumentParser",
+        "importPath": "argparse",
+        "description": "argparse",
+        "isExtraImport": true,
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "tqdm",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "tqdm",
+        "description": "tqdm",
+        "detail": "tqdm",
+        "documentation": {}
+    },
+    {
+        "label": "yaml",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "yaml",
+        "description": "yaml",
+        "detail": "yaml",
+        "documentation": {}
+    },
+    {
+        "label": "nn",
+        "importPath": "nets",
+        "description": "nets",
+        "isExtraImport": true,
+        "detail": "nets",
+        "documentation": {}
+    },
+    {
+        "label": "util",
+        "importPath": "utils",
+        "description": "utils",
+        "isExtraImport": true,
+        "detail": "utils",
+        "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "isExtraImport": true,
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "Conv",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class Conv(torch.nn.Module):\n    def __init__(self, in_ch, out_ch, activation, k=1, s=1, p=0, g=1):\n        super().__init__()\n        self.conv = torch.nn.Conv2d(in_ch, out_ch, k, s, p, groups=g, bias=False)\n        self.norm = torch.nn.BatchNorm2d(out_ch, eps=0.001, momentum=0.03)\n        self.relu = activation\n    def forward(self, x):\n        return self.relu(self.norm(self.conv(x)))\n    def fuse_forward(self, x):\n        return self.relu(self.conv(x))",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "Residual",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class Residual(torch.nn.Module):\n    def __init__(self, ch, e=0.5):\n        super().__init__()\n        self.conv1 = Conv(ch, int(ch * e), torch.nn.SiLU(), k=3, p=1)\n        self.conv2 = Conv(int(ch * e), ch, torch.nn.SiLU(), k=3, p=1)\n    def forward(self, x):\n        return x + self.conv2(self.conv1(x))\nclass CSPModule(torch.nn.Module):\n    def __init__(self, in_ch, out_ch):\n        super().__init__()",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "CSPModule",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class CSPModule(torch.nn.Module):\n    def __init__(self, in_ch, out_ch):\n        super().__init__()\n        self.conv1 = Conv(in_ch, out_ch // 2, torch.nn.SiLU())\n        self.conv2 = Conv(in_ch, out_ch // 2, torch.nn.SiLU())\n        self.conv3 = Conv(2 * (out_ch // 2), out_ch, torch.nn.SiLU())\n        self.res_m = torch.nn.Sequential(Residual(out_ch // 2, e=1.0),\n                                         Residual(out_ch // 2, e=1.0))\n    def forward(self, x):\n        y = self.res_m(self.conv1(x))",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "CSP",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class CSP(torch.nn.Module):\n    def __init__(self, in_ch, out_ch, n, csp, r):\n        super().__init__()\n        self.conv1 = Conv(in_ch, 2 * (out_ch // r), torch.nn.SiLU())\n        self.conv2 = Conv((2 + n) * (out_ch // r), out_ch, torch.nn.SiLU())\n        if not csp:\n            self.res_m = torch.nn.ModuleList(Residual(out_ch // r) for _ in range(n))\n        else:\n            self.res_m = torch.nn.ModuleList(CSPModule(out_ch // r, out_ch // r) for _ in range(n))\n    def forward(self, x):",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "SPP",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class SPP(torch.nn.Module):\n    def __init__(self, in_ch, out_ch, k=5):\n        super().__init__()\n        self.conv1 = Conv(in_ch, in_ch // 2, torch.nn.SiLU())\n        self.conv2 = Conv(in_ch * 2, out_ch, torch.nn.SiLU())\n        self.res_m = torch.nn.MaxPool2d(k, stride=1, padding=k // 2)\n    def forward(self, x):\n        x = self.conv1(x)\n        y1 = self.res_m(x)\n        y2 = self.res_m(y1)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "Attention",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class Attention(torch.nn.Module):\n    def __init__(self, ch, num_head):\n        super().__init__()\n        self.num_head = num_head\n        self.dim_head = ch // num_head\n        self.dim_key = self.dim_head // 2\n        self.scale = self.dim_key ** -0.5\n        self.qkv = Conv(ch, ch + self.dim_key * num_head * 2, torch.nn.Identity())\n        self.conv1 = Conv(ch, ch, torch.nn.Identity(), k=3, p=1, g=ch)\n        self.conv2 = Conv(ch, ch, torch.nn.Identity())",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "PSABlock",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class PSABlock(torch.nn.Module):\n    def __init__(self, ch, num_head):\n        super().__init__()\n        self.conv1 = Attention(ch, num_head)\n        self.conv2 = torch.nn.Sequential(Conv(ch, ch * 2, torch.nn.SiLU()),\n                                         Conv(ch * 2, ch, torch.nn.Identity()))\n    def forward(self, x):\n        x = x + self.conv1(x)\n        return x + self.conv2(x)\nclass PSA(torch.nn.Module):",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "PSA",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class PSA(torch.nn.Module):\n    def __init__(self, ch, n):\n        super().__init__()\n        self.conv1 = Conv(ch, 2 * (ch // 2), torch.nn.SiLU())\n        self.conv2 = Conv(2 * (ch // 2), ch, torch.nn.SiLU())\n        self.res_m = torch.nn.Sequential(*(PSABlock(ch // 2, ch // 128) for _ in range(n)))\n    def forward(self, x):\n        x, y = self.conv1(x).chunk(2, 1)\n        return self.conv2(torch.cat(tensors=(x, self.res_m(y)), dim=1))\nclass DarkNet(torch.nn.Module):",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "DarkNet",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class DarkNet(torch.nn.Module):\n    def __init__(self, width, depth, csp):\n        super().__init__()\n        self.p1 = []\n        self.p2 = []\n        self.p3 = []\n        self.p4 = []\n        self.p5 = []\n        # p1/2\n        self.p1.append(Conv(width[0], width[1], torch.nn.SiLU(), k=3, s=2, p=1))",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "DarkFPN",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class DarkFPN(torch.nn.Module):\n    def __init__(self, width, depth, csp):\n        super().__init__()\n        self.up = torch.nn.Upsample(scale_factor=2)\n        self.h1 = CSP(width[4] + width[5], width[4], depth[5], csp[0], r=2)\n        self.h2 = CSP(width[4] + width[4], width[3], depth[5], csp[0], r=2)\n        self.h3 = Conv(width[3], width[3], torch.nn.SiLU(), k=3, s=2, p=1)\n        self.h4 = CSP(width[3] + width[4], width[4], depth[5], csp[0], r=2)\n        self.h5 = Conv(width[4], width[4], torch.nn.SiLU(), k=3, s=2, p=1)\n        self.h6 = CSP(width[4] + width[5], width[5], depth[5], csp[1], r=2)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "DFL",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class DFL(torch.nn.Module):\n    # Generalized Focal Loss\n    # https://ieeexplore.ieee.org/document/9792391\n    def __init__(self, ch=16):\n        super().__init__()\n        self.ch = ch\n        self.conv = torch.nn.Conv2d(ch, out_channels=1, kernel_size=1, bias=False).requires_grad_(False)\n        x = torch.arange(ch, dtype=torch.float).view(1, ch, 1, 1)\n        self.conv.weight.data[:] = torch.nn.Parameter(x)\n    def forward(self, x):",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "Head",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class Head(torch.nn.Module):\n    anchors = torch.empty(0)\n    strides = torch.empty(0)\n    def __init__(self, nc=80, filters=()):\n        super().__init__()\n        self.ch = 16  # DFL channels\n        self.nc = nc  # number of classes\n        self.nl = len(filters)  # number of detection layers\n        self.no = nc + self.ch * 4  # number of outputs per anchor\n        self.stride = torch.zeros(self.nl)  # strides computed during build",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "YOLO",
+        "kind": 6,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "class YOLO(torch.nn.Module):\n    def __init__(self, width, depth, csp, num_classes):\n        super().__init__()\n        self.net = DarkNet(width, depth, csp)\n        self.fpn = DarkFPN(width, depth, csp)\n        img_dummy = torch.zeros(1, width[0], 256, 256)\n        self.head = Head(num_classes, (width[3], width[4], width[5]))\n        self.head.stride = torch.tensor([256 / x.shape[-2] for x in self.forward(img_dummy)])\n        self.stride = self.head.stride\n        self.head.initialize_biases()",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "fuse_conv",
+        "kind": 2,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "def fuse_conv(conv, norm):\n    fused_conv = torch.nn.Conv2d(conv.in_channels,\n                                 conv.out_channels,\n                                 kernel_size=conv.kernel_size,\n                                 stride=conv.stride,\n                                 padding=conv.padding,\n                                 groups=conv.groups,\n                                 bias=True).requires_grad_(False).to(conv.weight.device)\n    w_conv = conv.weight.clone().view(conv.out_channels, -1)\n    w_norm = torch.diag(norm.weight.div(torch.sqrt(norm.eps + norm.running_var)))",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "yolo_v11_n",
+        "kind": 2,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "def yolo_v11_n(num_classes: int = 80):\n    csp = [False, True]\n    depth = [1, 1, 1, 1, 1, 1]\n    width = [3, 16, 32, 64, 128, 256]\n    return YOLO(width, depth, csp, num_classes)\ndef yolo_v11_t(num_classes: int = 80):\n    csp = [False, True]\n    depth = [1, 1, 1, 1, 1, 1]\n    width = [3, 24, 48, 96, 192, 384]\n    return YOLO(width, depth, csp, num_classes)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "yolo_v11_t",
+        "kind": 2,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "def yolo_v11_t(num_classes: int = 80):\n    csp = [False, True]\n    depth = [1, 1, 1, 1, 1, 1]\n    width = [3, 24, 48, 96, 192, 384]\n    return YOLO(width, depth, csp, num_classes)\ndef yolo_v11_s(num_classes: int = 80):\n    csp = [False, True]\n    depth = [1, 1, 1, 1, 1, 1]\n    width = [3, 32, 64, 128, 256, 512]\n    return YOLO(width, depth, csp, num_classes)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "yolo_v11_s",
+        "kind": 2,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "def yolo_v11_s(num_classes: int = 80):\n    csp = [False, True]\n    depth = [1, 1, 1, 1, 1, 1]\n    width = [3, 32, 64, 128, 256, 512]\n    return YOLO(width, depth, csp, num_classes)\ndef yolo_v11_m(num_classes: int = 80):\n    csp = [True, True]\n    depth = [1, 1, 1, 1, 1, 1]\n    width = [3, 64, 128, 256, 512, 512]\n    return YOLO(width, depth, csp, num_classes)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "yolo_v11_m",
+        "kind": 2,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "def yolo_v11_m(num_classes: int = 80):\n    csp = [True, True]\n    depth = [1, 1, 1, 1, 1, 1]\n    width = [3, 64, 128, 256, 512, 512]\n    return YOLO(width, depth, csp, num_classes)\ndef yolo_v11_l(num_classes: int = 80):\n    csp = [True, True]\n    depth = [2, 2, 2, 2, 2, 2]\n    width = [3, 64, 128, 256, 512, 512]\n    return YOLO(width, depth, csp, num_classes)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "yolo_v11_l",
+        "kind": 2,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "def yolo_v11_l(num_classes: int = 80):\n    csp = [True, True]\n    depth = [2, 2, 2, 2, 2, 2]\n    width = [3, 64, 128, 256, 512, 512]\n    return YOLO(width, depth, csp, num_classes)\ndef yolo_v11_x(num_classes: int = 80):\n    csp = [True, True]\n    depth = [2, 2, 2, 2, 2, 2]\n    width = [3, 96, 192, 384, 768, 768]\n    return YOLO(width, depth, csp, num_classes)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "yolo_v11_x",
+        "kind": 2,
+        "importPath": "nets.nn",
+        "description": "nets.nn",
+        "peekOfCode": "def yolo_v11_x(num_classes: int = 80):\n    csp = [True, True]\n    depth = [2, 2, 2, 2, 2, 2]\n    width = [3, 96, 192, 384, 768, 768]\n    return YOLO(width, depth, csp, num_classes)",
+        "detail": "nets.nn",
+        "documentation": {}
+    },
+    {
+        "label": "Dataset",
+        "kind": 6,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "class Dataset(data.Dataset):\n    def __init__(self, filepaths, input_size, params, augment):\n        self.params = params\n        self.mosaic = augment\n        self.augment = augment\n        self.input_size = input_size\n        # Read labels\n        labels = self.load_label(filepaths)\n        self.labels = list(labels.values())\n        self.filepaths = list(labels.keys())  # update",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "Albumentations",
+        "kind": 6,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "class Albumentations:\n    def __init__(self):\n        self.transform = None\n        try:\n            import albumentations\n            transforms = [\n                albumentations.Blur(p=0.01),\n                albumentations.CLAHE(p=0.01),\n                albumentations.ToGray(p=0.01),\n                albumentations.MedianBlur(p=0.01),",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "wh2xy",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def wh2xy(x, w=640, h=640, pad_w=0, pad_h=0):\n    # Convert nx4 boxes\n    # from [x, y, w, h] normalized to [x1, y1, x2, y2] where xy1=top-left, xy2=bottom-right\n    y = numpy.copy(x)\n    y[:, 0] = w * (x[:, 0] - x[:, 2] / 2) + pad_w  # top left x\n    y[:, 1] = h * (x[:, 1] - x[:, 3] / 2) + pad_h  # top left y\n    y[:, 2] = w * (x[:, 0] + x[:, 2] / 2) + pad_w  # bottom right x\n    y[:, 3] = h * (x[:, 1] + x[:, 3] / 2) + pad_h  # bottom right y\n    return y\ndef xy2wh(x, w, h):",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "xy2wh",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def xy2wh(x, w, h):\n    # warning: inplace clip\n    x[:, [0, 2]] = x[:, [0, 2]].clip(0, w - 1e-3)  # x1, x2\n    x[:, [1, 3]] = x[:, [1, 3]].clip(0, h - 1e-3)  # y1, y2\n    # Convert nx4 boxes\n    # from [x1, y1, x2, y2] to [x, y, w, h] normalized where xy1=top-left, xy2=bottom-right\n    y = numpy.copy(x)\n    y[:, 0] = ((x[:, 0] + x[:, 2]) / 2) / w  # x center\n    y[:, 1] = ((x[:, 1] + x[:, 3]) / 2) / h  # y center\n    y[:, 2] = (x[:, 2] - x[:, 0]) / w  # width",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "resample",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def resample():\n    choices = (\n        cv2.INTER_AREA,\n        cv2.INTER_CUBIC,\n        cv2.INTER_LINEAR,\n        cv2.INTER_NEAREST,\n        cv2.INTER_LANCZOS4,\n    )\n    return random.choice(seq=choices)\ndef augment_hsv(image, params):",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "augment_hsv",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def augment_hsv(image, params):\n    # HSV color-space augmentation\n    h = params[\"hsv_h\"]\n    s = params[\"hsv_s\"]\n    v = params[\"hsv_v\"]\n    r = numpy.random.uniform(-1, 1, 3) * [h, s, v] + 1\n    h, s, v = cv2.split(cv2.cvtColor(image, cv2.COLOR_BGR2HSV))\n    x = numpy.arange(0, 256, dtype=r.dtype)\n    lut_h = ((x * r[0]) % 180).astype(\"uint8\")\n    lut_s = numpy.clip(x * r[1], 0, 255).astype(\"uint8\")",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "resize",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def resize(image, input_size, augment):\n    # Resize and pad image while meeting stride-multiple constraints\n    shape = image.shape[:2]  # current shape [height, width]\n    # Scale ratio (new / old)\n    r = min(input_size / shape[0], input_size / shape[1])\n    if not augment:  # only scale down, do not scale up (for better val mAP)\n        r = min(r, 1.0)\n    # Compute padding\n    pad = int(round(shape[1] * r)), int(round(shape[0] * r))\n    w = (input_size - pad[0]) / 2",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "candidates",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def candidates(box1, box2):\n    # box1(4,n), box2(4,n)\n    w1, h1 = box1[2] - box1[0], box1[3] - box1[1]\n    w2, h2 = box2[2] - box2[0], box2[3] - box2[1]\n    aspect_ratio = numpy.maximum(w2 / (h2 + 1e-16), h2 / (w2 + 1e-16))  # aspect ratio\n    return (\n        (w2 > 2) & (h2 > 2) & (w2 * h2 / (w1 * h1 + 1e-16) > 0.1) & (aspect_ratio < 100)\n    )\ndef random_perspective(image, label, params, border=(0, 0)):\n    h = image.shape[0] + border[0] * 2",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "random_perspective",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def random_perspective(image, label, params, border=(0, 0)):\n    h = image.shape[0] + border[0] * 2\n    w = image.shape[1] + border[1] * 2\n    # Center\n    center = numpy.eye(3)\n    center[0, 2] = -image.shape[1] / 2  # x translation (pixels)\n    center[1, 2] = -image.shape[0] / 2  # y translation (pixels)\n    # Perspective\n    perspective = numpy.eye(3)\n    # Rotation and Scale",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "mix_up",
+        "kind": 2,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "def mix_up(image1, label1, image2, label2):\n    # Applies MixUp augmentation https://arxiv.org/pdf/1710.09412.pdf\n    alpha = numpy.random.beta(a=32.0, b=32.0)  # mix-up ratio, alpha=beta=32.0\n    image = (image1 * alpha + image2 * (1 - alpha)).astype(numpy.uint8)\n    label = numpy.concatenate((label1, label2), 0)\n    return image, label\nclass Albumentations:\n    def __init__(self):\n        self.transform = None\n        try:",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "FORMATS",
+        "kind": 5,
+        "importPath": "utils.dataset",
+        "description": "utils.dataset",
+        "peekOfCode": "FORMATS = \"bmp\", \"dng\", \"jpeg\", \"jpg\", \"mpo\", \"png\", \"tif\", \"tiff\", \"webp\"\nclass Dataset(data.Dataset):\n    def __init__(self, filepaths, input_size, params, augment):\n        self.params = params\n        self.mosaic = augment\n        self.augment = augment\n        self.input_size = input_size\n        # Read labels\n        labels = self.load_label(filepaths)\n        self.labels = list(labels.values())",
+        "detail": "utils.dataset",
+        "documentation": {}
+    },
+    {
+        "label": "CosineLR",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class CosineLR:\n    def __init__(self, args, params, num_steps):\n        max_lr = params['max_lr']\n        min_lr = params['min_lr']\n        warmup_steps = int(max(params['warmup_epochs'] * num_steps, 100))\n        decay_steps = int(args.epochs * num_steps - warmup_steps)\n        warmup_lr = numpy.linspace(min_lr, max_lr, int(warmup_steps))\n        decay_lr = []\n        for step in range(1, decay_steps + 1):\n            alpha = math.cos(math.pi * step / decay_steps)",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "LinearLR",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class LinearLR:\n    def __init__(self, args, params, num_steps):\n        max_lr = params['max_lr']\n        min_lr = params['min_lr']\n        warmup_steps = int(max(params['warmup_epochs'] * num_steps, 100))\n        decay_steps = int(args.epochs * num_steps - warmup_steps)\n        warmup_lr = numpy.linspace(min_lr, max_lr, int(warmup_steps), endpoint=False)\n        decay_lr = numpy.linspace(max_lr, min_lr, decay_steps)\n        self.total_lr = numpy.concatenate((warmup_lr, decay_lr))\n    def step(self, step, optimizer):",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "EMA",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class EMA:\n    \"\"\"\n    Updated Exponential Moving Average (EMA) from https://github.com/rwightman/pytorch-image-models\n    Keeps a moving average of everything in the model state_dict (parameters and buffers)\n    For EMA details see https://www.tensorflow.org/api_docs/python/tf/train/ExponentialMovingAverage\n    \"\"\"\n    def __init__(self, model, decay=0.9999, tau=2000, updates=0):\n        # Create EMA\n        self.ema = copy.deepcopy(model).eval()  # FP32 EMA\n        self.updates = updates  # number of EMA updates",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "AverageMeter",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class AverageMeter:\n    def __init__(self):\n        self.num = 0\n        self.sum = 0\n        self.avg = 0\n    def update(self, v, n):\n        if not math.isnan(float(v)):\n            self.num = self.num + n\n            self.sum = self.sum + v * n\n            self.avg = self.sum / self.num",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "Assigner",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class Assigner(torch.nn.Module):\n    def __init__(self, nc=80, top_k=13, alpha=1.0, beta=6.0, eps=1E-9):\n        super().__init__()\n        self.top_k = top_k\n        self.nc = nc\n        self.alpha = alpha\n        self.beta = beta\n        self.eps = eps\n    @torch.no_grad()\n    def forward(self, pd_scores, pd_bboxes, anc_points, gt_labels, gt_bboxes, mask_gt):",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "QFL",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class QFL(torch.nn.Module):\n    def __init__(self, beta=2.0):\n        super().__init__()\n        self.beta = beta\n        self.bce_loss = torch.nn.BCEWithLogitsLoss(reduction='none')\n    def forward(self, outputs, targets):\n        bce_loss = self.bce_loss(outputs, targets)\n        return torch.pow(torch.abs(targets - outputs.sigmoid()), self.beta) * bce_loss\nclass VFL(torch.nn.Module):\n    def __init__(self, alpha=0.75, gamma=2.00, iou_weighted=True):",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "VFL",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class VFL(torch.nn.Module):\n    def __init__(self, alpha=0.75, gamma=2.00, iou_weighted=True):\n        super().__init__()\n        assert alpha >= 0.0\n        self.alpha = alpha\n        self.gamma = gamma\n        self.iou_weighted = iou_weighted\n        self.bce_loss = torch.nn.BCEWithLogitsLoss(reduction='none')\n    def forward(self, outputs, targets):\n        assert outputs.size() == targets.size()",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "FocalLoss",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class FocalLoss(torch.nn.Module):\n    def __init__(self, alpha=0.25, gamma=1.5):\n        super().__init__()\n        self.alpha = alpha\n        self.gamma = gamma\n        self.bce_loss = torch.nn.BCEWithLogitsLoss(reduction='none')\n    def forward(self, outputs, targets):\n        loss = self.bce_loss(outputs, targets)\n        if self.alpha > 0:\n            alpha_factor = targets * self.alpha + (1 - targets) * (1 - self.alpha)",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "BoxLoss",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class BoxLoss(torch.nn.Module):\n    def __init__(self, dfl_ch):\n        super().__init__()\n        self.dfl_ch = dfl_ch\n    def forward(self, pred_dist, pred_bboxes, anchor_points, target_bboxes, target_scores, target_scores_sum, fg_mask):\n        # IoU loss\n        weight = torch.masked_select(target_scores.sum(-1), fg_mask).unsqueeze(-1)\n        iou = compute_iou(pred_bboxes[fg_mask], target_bboxes[fg_mask])\n        loss_box = ((1.0 - iou) * weight).sum() / target_scores_sum\n        # DFL loss",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "ComputeLoss",
+        "kind": 6,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "class ComputeLoss:\n    def __init__(self, model, params):\n        if hasattr(model, 'module'):\n            model = model.module\n        device = next(model.parameters()).device\n        m = model.head  # Head() module\n        self.params = params\n        self.stride = m.stride\n        self.nc = m.nc\n        self.no = m.no",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "setup_seed",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def setup_seed():\n    \"\"\"\n    Setup random seed.\n    \"\"\"\n    random.seed(0)\n    numpy.random.seed(0)\n    torch.manual_seed(0)\n    torch.backends.cudnn.benchmark = False\n    torch.backends.cudnn.deterministic = True\ndef setup_multi_processes():",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "setup_multi_processes",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def setup_multi_processes():\n    \"\"\"\n    Setup multi-processing environment variables.\n    \"\"\"\n    import cv2\n    from os import environ\n    from platform import system\n    # set multiprocess start method as `fork` to speed up the training\n    if system() != 'Windows':\n        torch.multiprocessing.set_start_method('fork', force=True)",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "export_onnx",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def export_onnx(args):\n    import onnx  # noqa\n    inputs = ['images']\n    outputs = ['outputs']\n    dynamic = {'outputs': {0: 'batch', 1: 'anchors'}}\n    m = torch.load('./weights/best.pt')['model'].float()\n    x = torch.zeros((1, 3, args.input_size, args.input_size))\n    torch.onnx.export(m.cpu(), x.cpu(),\n                      f='./weights/best.onnx',\n                      verbose=False,",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "wh2xy",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def wh2xy(x):\n    y = x.clone() if isinstance(x, torch.Tensor) else numpy.copy(x)\n    y[:, 0] = x[:, 0] - x[:, 2] / 2  # top left x\n    y[:, 1] = x[:, 1] - x[:, 3] / 2  # top left y\n    y[:, 2] = x[:, 0] + x[:, 2] / 2  # bottom right x\n    y[:, 3] = x[:, 1] + x[:, 3] / 2  # bottom right y\n    return y\ndef make_anchors(x, strides, offset=0.5):\n    assert x is not None\n    anchor_tensor, stride_tensor = [], []",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "make_anchors",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def make_anchors(x, strides, offset=0.5):\n    assert x is not None\n    anchor_tensor, stride_tensor = [], []\n    dtype, device = x[0].dtype, x[0].device\n    for i, stride in enumerate(strides):\n        _, _, h, w = x[i].shape\n        sx = torch.arange(end=w, device=device, dtype=dtype) + offset  # shift x\n        sy = torch.arange(end=h, device=device, dtype=dtype) + offset  # shift y\n        sy, sx = torch.meshgrid(sy, sx)\n        anchor_tensor.append(torch.stack((sx, sy), -1).view(-1, 2))",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "compute_metric",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def compute_metric(output, target, iou_v):\n    # intersection(N,M) = (rb(N,M,2) - lt(N,M,2)).clamp(0).prod(2)\n    (a1, a2) = target[:, 1:].unsqueeze(1).chunk(2, 2)\n    (b1, b2) = output[:, :4].unsqueeze(0).chunk(2, 2)\n    intersection = (torch.min(a2, b2) - torch.max(a1, b1)).clamp(0).prod(2)\n    # IoU = intersection / (area1 + area2 - intersection)\n    iou = intersection / ((a2 - a1).prod(2) + (b2 - b1).prod(2) - intersection + 1e-7)\n    correct = numpy.zeros((output.shape[0], iou_v.shape[0]))\n    correct = correct.astype(bool)\n    for i in range(len(iou_v)):",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "non_max_suppression",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def non_max_suppression(outputs, confidence_threshold=0.001, iou_threshold=0.65):\n    max_wh = 7680\n    max_det = 300\n    max_nms = 30000\n    bs = outputs.shape[0]  # batch size\n    nc = outputs.shape[1] - 4  # number of classes\n    xc = outputs[:, 4:4 + nc].amax(1) > confidence_threshold  # candidates\n    # Settings\n    start = time()\n    limit = 0.5 + 0.05 * bs  # seconds to quit after",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "smooth",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def smooth(y, f=0.1):\n    # Box filter of fraction f\n    nf = round(len(y) * f * 2) // 2 + 1  # number of filter elements (must be odd)\n    p = numpy.ones(nf // 2)  # ones padding\n    yp = numpy.concatenate((p * y[0], y, p * y[-1]), 0)  # y padded\n    return numpy.convolve(yp, numpy.ones(nf) / nf, mode='valid')  # y-smoothed\ndef plot_pr_curve(px, py, ap, names, save_dir):\n    from matplotlib import pyplot\n    fig, ax = pyplot.subplots(1, 1, figsize=(9, 6), tight_layout=True)\n    py = numpy.stack(py, axis=1)",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "plot_pr_curve",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def plot_pr_curve(px, py, ap, names, save_dir):\n    from matplotlib import pyplot\n    fig, ax = pyplot.subplots(1, 1, figsize=(9, 6), tight_layout=True)\n    py = numpy.stack(py, axis=1)\n    if 0 < len(names) < 21:  # display per-class legend if < 21 classes\n        for i, y in enumerate(py.T):\n            ax.plot(px, y, linewidth=1, label=f\"{names[i]} {ap[i, 0]:.3f}\")  # plot(recall, precision)\n    else:\n        ax.plot(px, py, linewidth=1, color=\"grey\")  # plot(recall, precision)\n    ax.plot(px, py.mean(1), linewidth=3, color=\"blue\", label=\"all classes %.3f mAP@0.5\" % ap[:, 0].mean())",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "plot_curve",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def plot_curve(px, py, names, save_dir, x_label=\"Confidence\", y_label=\"Metric\"):\n    from matplotlib import pyplot\n    figure, ax = pyplot.subplots(1, 1, figsize=(9, 6), tight_layout=True)\n    if 0 < len(names) < 21:  # display per-class legend if < 21 classes\n        for i, y in enumerate(py):\n            ax.plot(px, y, linewidth=1, label=f\"{names[i]}\")  # plot(confidence, metric)\n    else:\n        ax.plot(px, py.T, linewidth=1, color=\"grey\")  # plot(confidence, metric)\n    y = smooth(py.mean(0), f=0.05)\n    ax.plot(px, y, linewidth=3, color=\"blue\", label=f\"all classes {y.max():.3f} at {px[y.argmax()]:.3f}\")",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "compute_ap",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def compute_ap(tp, conf, output, target, plot=False, names=(), eps=1E-16):\n    \"\"\"\n    Compute the average precision, given the recall and precision curves.\n    Source: https://github.com/rafaelpadilla/Object-Detection-Metrics.\n    # Arguments\n        tp:  True positives (nparray, nx1 or nx10).\n        conf:  Object-ness value from 0-1 (nparray).\n        output:  Predicted object classes (nparray).\n        target:  True object classes (nparray).\n    # Returns",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "compute_iou",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def compute_iou(box1, box2, eps=1e-7):\n    # Returns Intersection over Union (IoU) of box1(1,4) to box2(n,4)\n    # Get the coordinates of bounding boxes\n    b1_x1, b1_y1, b1_x2, b1_y2 = box1.chunk(4, -1)\n    b2_x1, b2_y1, b2_x2, b2_y2 = box2.chunk(4, -1)\n    w1, h1 = b1_x2 - b1_x1, b1_y2 - b1_y1 + eps\n    w2, h2 = b2_x2 - b2_x1, b2_y2 - b2_y1 + eps\n    # Intersection area\n    inter = (b1_x2.minimum(b2_x2) - b1_x1.maximum(b2_x1)).clamp(0) * \\\n            (b1_y2.minimum(b2_y2) - b1_y1.maximum(b2_y1)).clamp(0)",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "strip_optimizer",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def strip_optimizer(filename):\n    x = torch.load(filename, map_location=\"cpu\")\n    x['model'].half()  # to FP16\n    for p in x['model'].parameters():\n        p.requires_grad = False\n    torch.save(x, f=filename)\ndef clip_gradients(model, max_norm=10.0):\n    parameters = model.parameters()\n    torch.nn.utils.clip_grad_norm_(parameters, max_norm=max_norm)\ndef load_weight(model, ckpt):",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "clip_gradients",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def clip_gradients(model, max_norm=10.0):\n    parameters = model.parameters()\n    torch.nn.utils.clip_grad_norm_(parameters, max_norm=max_norm)\ndef load_weight(model, ckpt):\n    dst = model.state_dict()\n    src = torch.load(ckpt)['model'].float().cpu()\n    ckpt = {}\n    for k, v in src.state_dict().items():\n        if k in dst and v.shape == dst[k].shape:\n            ckpt[k] = v",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "load_weight",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def load_weight(model, ckpt):\n    dst = model.state_dict()\n    src = torch.load(ckpt)['model'].float().cpu()\n    ckpt = {}\n    for k, v in src.state_dict().items():\n        if k in dst and v.shape == dst[k].shape:\n            ckpt[k] = v\n    model.load_state_dict(state_dict=ckpt, strict=False)\n    return model\ndef set_params(model, decay):",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "set_params",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def set_params(model, decay):\n    p1 = []\n    p2 = []\n    norm = tuple(v for k, v in torch.nn.__dict__.items() if \"Norm\" in k)\n    for m in model.modules():\n        for n, p in m.named_parameters(recurse=0):\n            if not p.requires_grad:\n                continue\n            if n == \"bias\":  # bias (no decay)\n                p1.append(p)",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "plot_lr",
+        "kind": 2,
+        "importPath": "utils.util",
+        "description": "utils.util",
+        "peekOfCode": "def plot_lr(args, optimizer, scheduler, num_steps):\n    from matplotlib import pyplot\n    optimizer = copy.copy(optimizer)\n    scheduler = copy.copy(scheduler)\n    y = []\n    for epoch in range(args.epochs):\n        for i in range(num_steps):\n            step = i + num_steps * epoch\n            scheduler.step(step, optimizer)\n            y.append(optimizer.param_groups[0]['lr'])",
+        "detail": "utils.util",
+        "documentation": {}
+    },
+    {
+        "label": "ensureData",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def ensureData(dir_img):\n    filepaths = []\n    flv = os.listdir(dir_img)\n    for f in flv:\n        filepaths.append(dir_img + f)\n    return filepaths\ndef train(args, params):\n    # 设置训练和测试数据集路径\n    train_imgs = \"../datasets/out_roco/images/\"\n    test_imgs = \"../datasets/test_roco/images/\"",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "train",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def train(args, params):\n    # 设置训练和测试数据集路径\n    train_imgs = \"../datasets/out_roco/images/\"\n    test_imgs = \"../datasets/test_roco/images/\"\n    # 获取训练和测试数据集文件路径\n    train_set = ensureData(train_imgs)\n    test_set = ensureData(test_imgs)\n    # Model\n    model = nn.yolo_v11_n(len(params[\"names\"]))\n    model.cuda()",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "test",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def test(args, params, model=None, test_set=None):\n    if test_set is None:\n        test_imgs = \"../datasets/test_roco/images/\"\n        test_set = ensureData(test_imgs)\n    dataset = Dataset(test_set, args.input_size, params, augment=False)\n    loader = data.DataLoader(\n        dataset,\n        batch_size=4,\n        shuffle=False,\n        num_workers=4,",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "profile",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def profile(args, params):\n    import thop\n    shape = (1, 3, args.input_size, args.input_size)\n    model = nn.yolo_v11_n(len(params[\"names\"])).fuse()\n    model.eval()\n    model(torch.zeros(shape))\n    x = torch.empty(shape)\n    flops, num_params = thop.profile(model, inputs=[x], verbose=False)\n    flops, num_params = thop.clever_format(nums=[2 * flops, num_params], format=\"%.3f\")\n    if args.local_rank == 0:",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "main",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def main():\n    parser = ArgumentParser()\n    parser.add_argument(\"--input-size\", default=640, type=int)\n    parser.add_argument(\"--batch-size\", default=32, type=int)\n    parser.add_argument(\"--local-rank\", default=0, type=int)\n    parser.add_argument(\"--local_rank\", default=0, type=int)\n    parser.add_argument(\"--epochs\", default=600, type=int)\n    parser.add_argument(\"--train\", action=\"store_true\")\n    parser.add_argument(\"--test\", action=\"store_true\")\n    args = parser.parse_args()",
+        "detail": "main",
+        "documentation": {}
+    }
+]
